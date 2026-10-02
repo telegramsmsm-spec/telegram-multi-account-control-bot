@@ -1,12 +1,20 @@
-# Telegram Multi-Account Control Bot - Full MVP
+# Telegram Multi-Account Control Bot - Full MVP (Admin Only)
 
 **Complete production-ready architecture**  
-Inline buttons only • Country sections • Sessions • Proxies • Join • TXT Messaging • Internal + External Reports • Professional templates
+**Only the owner/admin can use any feature**
+
+Inline buttons only • Country sections • Sessions • Proxies • Join • TXT Messaging • Internal/External Reports • Professional templates
+
+## Access Control
+- Hard admin-only lock via middleware
+- Only Telegram user IDs listed in `ADMIN_IDS` can interact with the bot
+- Everyone else receives "Access denied" and is blocked
+- Applied to every message and every button press
 
 ## Features (Nothing Missing)
 
 ### 1. Core
-- Permanent StringSession / TData storage
+- Permanent StringSession storage
 - Full account control
 - Status tracking (active / limited / banned / warming)
 
@@ -49,13 +57,13 @@ Inline buttons only • Country sections • Sessions • Proxies • Join • T
 - Multiple variations
 - Easy manage
 
-### 9. UI/UX (Critical)
-- **Zero /** commands
+### 9. UI/UX
+- Zero slash commands (except /start for owner)
 - Pure Inline Keyboard multi-level menus
 - Back + Home on every screen
 - Breadcrumbs
 - Clear respectful messages on every click
-- Consistent layout, no mess
+- Consistent layout
 
 ### 10. Safety
 - Rate limits
@@ -63,6 +71,7 @@ Inline buttons only • Country sections • Sessions • Proxies • Join • T
 - Session keep-alive
 - Global pause
 - Complete logs
+- Admin-only enforcement
 
 ## Project Structure
 ```
@@ -70,71 +79,28 @@ telegram-multi-account-control-bot/
 ├── bot/
 │   ├── main.py
 │   ├── config.py
+│   ├── middlewares/
+│   │   └── admin.py          # Admin-only lock
 │   ├── handlers/
-│   │   ├── start.py
-│   │   ├── accounts.py
-│   │   ├── proxy.py
-│   │   ├── join.py
-│   │   ├── messaging.py
-│   │   ├── reports_internal.py
-│   │   ├── reports_external.py
-│   │   ├── templates.py
-│   │   └── navigation.py
 │   ├── keyboards/
-│   │   ├── main_menu.py
-│   │   ├── accounts_kb.py
-│   │   ├── countries_kb.py
-│   │   ├── proxy_kb.py
-│   │   ├── join_kb.py
-│   │   ├── messaging_kb.py
-│   │   ├── reports_kb.py
-│   │   └── common.py
 │   ├── services/
-│   │   ├── session_manager.py
-│   │   ├── proxy_manager.py
-│   │   ├── account_service.py
-│   │   ├── join_service.py
-│   │   ├── messaging_service.py
-│   │   ├── report_service.py
-│   │   └── template_service.py
 │   ├── database/
-│   │   ├── models.py
-│   │   └── db.py
 │   └── utils/
-│       ├── delays.py
-│       ├── validators.py
-│       └── logger.py
 ├── data/
-│   ├── sessions/
-│   ├── proxies/
-│   ├── templates/
-│   └── logs/
+├── docs/
 ├── requirements.txt
 ├── .env.example
-├── .gitignore
-└── docs/
-    ├── FULL_PLAN.md
-    ├── UI_FLOW.md
-    └── API.md
+└── .gitignore
 ```
 
-## Tech Stack
-- Python 3.11+
-- aiogram 3.x (pure inline)
-- Telethon / Pyrogram for user accounts
-- SQLAlchemy + SQLite/PostgreSQL
-- python-socks / aiohttp-socks
-- pydantic-settings
-
 ## Quick Start
-1. Clone
+1. Clone the repo
 2. `pip install -r requirements.txt`
-3. Copy `.env.example` → `.env` and fill BOT_TOKEN + API_ID + API_HASH
-4. `python -m bot.main`
+3. Copy `.env.example` → `.env`
+4. Put your Telegram user ID in `ADMIN_IDS=`
+5. Fill BOT_TOKEN, API_ID, API_HASH
+6. `python -m bot.main`
 
-## Status
-Full MVP structure published.  
-Core modules skeleton ready for implementation.
+Only the ID(s) in ADMIN_IDS will be able to use the bot.
 
-**Owner:** telegramsmsm-spec  
 **Repo:** https://github.com/telegramsmsm-spec/telegram-multi-account-control-bot
