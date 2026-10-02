@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+*.session
+*.session-journal
+data/sessions/
+data/logs/
+.venv/
+venv/
+*.db
+.DS_Store
